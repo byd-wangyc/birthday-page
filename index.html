@@ -100,6 +100,75 @@
             overflow: hidden;
         }
 
+        /* Hero image */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: min(46vh, 360px);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 8px auto 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2));
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: var(--hero-url, none);
+            background-size: cover;
+            background-position: center;
+            filter: saturate(1.05) contrast(1.02);
+            transform: scale(1.02);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.02));
+        }
+
+        .hero-badge {
+            position: absolute;
+            left: 14px;
+            bottom: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(6px);
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 14px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Gallery */
+        .gallery {
+            margin: 10px auto 6px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .gallery img:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-empty {
+            color: rgba(0, 0, 0, 0.55);
+            font-size: 14px;
+        }
+
         .confetti-canvas {
             position: fixed;
             inset: 0;
@@ -298,12 +367,18 @@
             <div class="balloons" id="balloons"></div>
             <h1 class="title">亲爱的，生日快乐</h1>
             <p class="subtitle">今天，所有的好运和温柔都奔向你</p>
+            <!-- Hero image: 将你的合照放到 assets/photos/hero.jpg 即可自动展示 -->
+            <div class="hero" id="hero">
+                <div class="hero-badge">我们的专属回忆 ✨</div>
+            </div>
             <div class="line"></div>
             <p class="message">
                 愿你眼里总有光，心里总有爱；
                 愿你不止今天，被鲜花、蛋糕和拥抱包围；
                 愿你的每一个愿望，都被宇宙悄悄记下，慢慢兑现。
             </p>
+            <!-- Gallery: 将图片放入 assets/photos/ 目录，命名随意，稍后在 PHOTO_LIST 中列出路径 -->
+            <div class="gallery" id="gallery"></div>
             <div class="cta">
                 <button class="btn btn-primary" id="btnConfetti">放一场礼花</button>
                 <button class="btn btn-secondary" id="btnLetter">打开小彩蛋</button>
@@ -442,6 +517,48 @@
                 alert('可以手动复制地址栏链接分享给她~');
             }
         });
+
+        // ========= Custom photos =========
+        // 1) 将你的合照放到 assets/photos/hero.jpg，会自动作为顶部横幅展示
+        // 2) 将更多图片放到 assets/photos/ 目录，并把文件路径添加到 PHOTO_LIST
+        //    例如：'assets/photos/1.jpg', 'assets/photos/trip.png'
+        window.PHOTO_LIST = [
+            'assets/photos/1.jpg', 'assets/photos/2.jpg', 'assets/photos/3.jpg',
+            'assets/photos/4.jpg', 'assets/photos/5.jpg', 'assets/photos/6.jpg', 'assets/photos/7.jpg'
+        ];
+
+        // Setup hero background if exists
+        (function setupHero() {
+            const heroEl = document.getElementById('hero');
+            const testImg = new Image();
+            testImg.onload = () => {
+                heroEl.style.setProperty('--hero-url', `url('assets/photos/hero.jpg')`);
+            };
+            testImg.src = 'assets/photos/hero.jpg';
+        })();
+
+        // Render gallery
+        (function renderGallery() {
+            const list = Array.isArray(window.PHOTO_LIST) ? window.PHOTO_LIST : [];
+            const container = document.getElementById('gallery');
+            if (!list.length) {
+                const empty = document.createElement('div');
+                empty.className = 'gallery-empty';
+                empty.textContent = '小提示：把照片放到 assets/photos/ 并在页面底部的 PHOTO_LIST 中列出文件名，就会在这里显示啦～';
+                container.replaceChildren(empty);
+                return;
+            }
+            const fr = document.createDocumentFragment();
+            list.forEach(src => {
+                const img = document.createElement('img');
+                img.loading = 'lazy';
+                img.decoding = 'async';
+                img.src = src;
+                img.alt = '我们的回忆';
+                fr.appendChild(img);
+            });
+            container.replaceChildren(fr);
+        })();
     </script>
 </body>
 
