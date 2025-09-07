@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给你的一份小心意 · 生日快乐</title>
+    <meta name="description" content="送给你的生日网页：愿你今天被温柔和惊喜环绕。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@300;400;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg1: #ffd1dc;
+            --bg2: #c7ebff;
+            --bg3: #e6e1ff;
+            --card: rgba(255, 255, 255, 0.6);
+            --card-stroke: rgba(255, 255, 255, 0.8);
+            --text: #2b2b2b;
+            --accent: #ff6b9f;
+            --accent-2: #7aa9ff;
+            --gold: #ffcf66;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            color: var(--text);
+            overflow-x: hidden;
+            background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
+            background-size: 200% 200%;
+            animation: bgShift 12s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .fireflies {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(4px 4px at 20% 30%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0)),
+                radial-gradient(3px 3px at 80% 70%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0)),
+                radial-gradient(3px 3px at 40% 80%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+            filter: blur(0.3px);
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 0.9;
+            }
+        }
+
+        .container {
+            min-height: 100dvh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            position: relative;
+        }
+
+        .card {
+            width: min(920px, 92vw);
+            background: var(--card);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-stroke);
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 48px 36px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confetti-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .title {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(36px, 7vw, 72px);
+            margin: 0 0 8px;
+            color: var(--accent);
+            letter-spacing: 1px;
+            text-shadow: 0 6px 20px rgba(255, 107, 159, 0.35);
+        }
+
+        .subtitle {
+            font-size: clamp(16px, 3.2vw, 22px);
+            margin: 0 0 24px;
+            color: rgba(0, 0, 0, 0.65);
+        }
+
+        .line {
+            width: 120px;
+            height: 4px;
+            margin: 16px auto 28px;
+            background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent-2));
+            border-radius: 999px;
+        }
+
+        .message {
+            font-size: clamp(16px, 2.8vw, 20px);
+            line-height: 1.9;
+            margin: 0 auto 28px;
+            max-width: 720px;
+        }
+
+        .cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .btn {
+            appearance: none;
+            border: 0;
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: transform 0.12s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            will-change: transform;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, #ff8ab8 100%);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 107, 159, 0.35);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--accent-2) 0%, #9ec0ff 100%);
+            color: white;
+            box-shadow: 0 10px 20px rgba(122, 169, 255, 0.35);
+        }
+
+        .btn-ghost {
+            background: white;
+            color: var(--text);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.04);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            filter: brightness(0.98);
+        }
+
+        .ribbon {
+            position: absolute;
+            top: -18px;
+            right: -60px;
+            transform: rotate(20deg);
+            background: linear-gradient(135deg, var(--gold), #ffd98a);
+            color: #7a4d00;
+            padding: 10px 80px;
+            font-weight: 900;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+            letter-spacing: 1px;
+        }
+
+        .balloons {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -160px;
+            width: 36px;
+            height: 44px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0.7;
+            animation: floatUp linear infinite;
+            box-shadow: inset -6px -8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 28px;
+            background: rgba(0, 0, 0, 0.12);
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(-120vh) translateX(20px) rotate(6deg);
+            }
+        }
+
+        .footer {
+            margin-top: 22px;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.55);
+        }
+
+        dialog {
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 18px;
+            padding: 0;
+            width: min(680px, 92vw);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .modal-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #fff, #fff6fa);
+            border-radius: 18px 18px 0 0;
+        }
+
+        .modal-body {
+            padding: 22px;
+            line-height: 1.9;
+        }
+
+        .modal-actions {
+            padding: 14px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        @media (max-width: 520px) {
+            .card {
+                padding: 36px 20px;
+            }
+
+            .ribbon {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas class="confetti-canvas" id="confetti"></canvas>
+    <div class="fireflies"></div>
+    <div class="container">
+        <div class="card">
+            <div class="ribbon">Happy Birthday</div>
+            <div class="balloons" id="balloons"></div>
+            <h1 class="title">亲爱的，生日快乐</h1>
+            <p class="subtitle">今天，所有的好运和温柔都奔向你</p>
+            <div class="line"></div>
+            <p class="message">
+                愿你眼里总有光，心里总有爱；
+                愿你不止今天，被鲜花、蛋糕和拥抱包围；
+                愿你的每一个愿望，都被宇宙悄悄记下，慢慢兑现。
+            </p>
+            <div class="cta">
+                <button class="btn btn-primary" id="btnConfetti">放一场礼花</button>
+                <button class="btn btn-secondary" id="btnLetter">打开小彩蛋</button>
+                <button class="btn btn-ghost" id="btnShare">复制分享链接</button>
+            </div>
+            <div class="footer">愿你的此刻，被温柔和惊喜轻轻拥抱 ✨</div>
+        </div>
+    </div>
+
+    <dialog id="letterDialog">
+        <div class="modal-header">
+            <strong>写给你的话</strong>
+            <button class="btn btn-ghost" id="btnClose">关闭</button>
+        </div>
+        <div class="modal-body">
+            <p>
+                生命里最温暖的幸运，是与你相遇。你的笑，是我所有计划外的惊喜；
+                你的名字，是我每一次心动时最轻的叹息。今天想把最柔软的祝福都给你：
+                想要的都会拥有，得不到的都能释怀，被爱包围，也被世界温柔以待。
+            </p>
+            <p>
+                不止今天，明天、后天，以及每一个普通的日子，
+                我都在你身边，为你点亮小小的烟火。
+            </p>
+            <p>祝我的女孩，生日快乐。</p>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" id="btnMoreConfetti">再来点礼花</button>
+            <button class="btn btn-primary" id="btnIKnow">收下啦</button>
+        </div>
+    </dialog>
+
+    <script>
+        const confettiCanvas = document.getElementById('confetti');
+        const ctx = confettiCanvas.getContext('2d');
+        let confettiPieces = [];
+        function resizeCanvas() {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function createConfettiBurst(x, y, count = 180) {
+            const colors = ['#ff6b9f', '#ffd166', '#7aa9ff', '#95e1d3', '#f7aef8'];
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 4 + Math.random() * 6;
+                confettiPieces.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 4,
+                    size: 4 + Math.random() * 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rotation: Math.random() * Math.PI,
+                    vr: (Math.random() - 0.5) * 0.3,
+                    life: 90 + Math.random() * 50
+                });
+            }
+        }
+
+        function updateConfetti() {
+            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            confettiPieces = confettiPieces.filter(p => p.life > 0);
+            for (const p of confettiPieces) {
+                p.vy += 0.15;
+                p.x += p.vx;
+                p.y += p.vy;
+                p.rotation += p.vr;
+                p.life -= 1;
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                ctx.restore();
+            }
+            requestAnimationFrame(updateConfetti);
+        }
+        updateConfetti();
+
+        function randomBetween(min, max) { return Math.random() * (max - min) + min; }
+        function spawnBalloons() {
+            const container = document.getElementById('balloons');
+            const colors = ['#ff8ab8', '#9ec0ff', '#8de0c1', '#ffd98a', '#f7aef8'];
+            for (let i = 0; i < 18; i++) {
+                const el = document.createElement('div');
+                el.className = 'balloon';
+                const color = colors[i % colors.length];
+                el.style.background = `radial-gradient(circle at 30% 30%, #fff, ${color})`;
+                el.style.left = randomBetween(0, 100) + '%';
+                const duration = randomBetween(10, 22);
+                const delay = randomBetween(0, 12);
+                el.style.animationDuration = duration + 's';
+                el.style.animationDelay = delay + 's';
+                el.style.transform = `translateY(${randomBetween(0, 60)}px)`;
+                container.appendChild(el);
+            }
+        }
+        spawnBalloons();
+
+        function celebrate(centered = false) {
+            if (centered) {
+                createConfettiBurst(window.innerWidth / 2, window.innerHeight / 3);
+            } else {
+                for (let i = 0; i < 5; i++) {
+                    createConfettiBurst(randomBetween(80, window.innerWidth - 80), randomBetween(80, window.innerHeight - 200), 120);
+                }
+            }
+        }
+
+        window.addEventListener('load', () => {
+            celebrate(true);
+            setTimeout(() => celebrate(false), 600);
+        });
+
+        document.getElementById('btnConfetti').addEventListener('click', () => celebrate(false));
+
+        const dialog = document.getElementById('letterDialog');
+        document.getElementById('btnLetter').addEventListener('click', () => {
+            dialog.showModal();
+            celebrate(true);
+        });
+        document.getElementById('btnClose').addEventListener('click', () => dialog.close());
+        document.getElementById('btnIKnow').addEventListener('click', () => dialog.close());
+        document.getElementById('btnMoreConfetti').addEventListener('click', () => celebrate(false));
+
+        document.getElementById('btnShare').addEventListener('click', async () => {
+            try {
+                const url = window.location.href;
+                await navigator.clipboard.writeText(url);
+                const original = document.getElementById('btnShare').textContent;
+                document.getElementById('btnShare').textContent = '已复制 ✓';
+                setTimeout(() => document.getElementById('btnShare').textContent = original, 1200);
+            } catch (e) {
+                alert('可以手动复制地址栏链接分享给她~');
+            }
+        });
+    </script>
+</body>
+
+</html>
